@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Webpage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+        }
+
+        nav ul li:hover > a {
+            background-color: #555;
+        }
+
+        nav ul .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #333;
+            padding: 0;
+        }
+
+        nav ul li:hover .dropdown {
+            display: block;
+        }
+
+        nav ul .dropdown li a {
+            padding: 10px;
+        }
+
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        form {
+            margin: 20px auto;
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        form input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        form button {
+            margin-top: 10px;
+            padding: 10px 20px;
+        }
+
+        #imageContainer {
+            margin-top: 20px;
+        }
+
+        #imageContainer img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul id="menu">
+                <li><a href="#">Home</a></li>
+                <li>
+                    <a href="#">Services</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">SEO</a></li>
+                        <li><a href="#">Marketing</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h1>Interactive Form</h1>
+            <form id="contactForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <button type="submit">Submit</button>
+            </form>
+            <p id="formMessage"></p>
+        </section>
+
+        <section>
+            <h1>Dynamic Image Update</h1>
+            <label for="imageSelector">Choose an image:</label>
+            <select id="imageSelector">
+                <option value="image1.jpeg">Image 1</option>
+                <option value="image2.jpeg">Image 2</option>
+                <option value="image3.jpeg">Image 3</option>
+            </select>
+            <div id="imageContainer">
+                <img id="displayedImage" src="image1.jpeg" alt="Selected Image">
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Form Validation
+            const form = document.getElementById('contactForm');
+            const formMessage = document.getElementById('formMessage');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const name = form.name.value.trim();
+                const email = form.email.value.trim();
+
+                if (!name || !email) {
+                    formMessage.textContent = 'Please fill out all fields.';
+                    formMessage.style.color = 'red';
+                } else if (!validateEmail(email)) {
+                    formMessage.textContent = 'Please enter a valid email address.';
+                    formMessage.style.color = 'red';
+                } else {
+                    formMessage.textContent = 'Form submitted successfully!';
+                    formMessage.style.color = 'green';
+                    form.reset();
+                }
+            });
+
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            // Dynamic Image Update
+            const imageSelector = document.getElementById('imageSelector');
+            const displayedImage = document.getElementById('displayedImage');
+
+            imageSelector.addEventListener('change', function () {
+                const selectedImage = imageSelector.value;
+                displayedImage.src = selectedImage;
+            });
+        });
+    </script>
+</body>
+</html>
